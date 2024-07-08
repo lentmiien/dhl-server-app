@@ -1,0 +1,11 @@
+{
+  "name": "dhl-server-app",
+  "version": "1.0.0",
+  "description": "An app powered by DHL API, exposing an RESP API for user access",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lennart",
+  "license": "ISC"
+}
