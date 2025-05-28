@@ -8,7 +8,17 @@
     "dev": "nodemon src/server.js",
     "test": "jest",
     "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
+    "lint:fix": "eslint src/ --fix",
+    "db:migrate": "knex migrate:latest --knexfile knexfile.js",
+    "db:rollback": "knex migrate:rollback --knexfile knexfile.js",
+    "db:rollback:all": "knex migrate:rollback --all --knexfile knexfile.js",
+    "db:seed": "knex seed:run --knexfile knexfile.js",
+    "db:make:migration": "knex migrate:make --knexfile knexfile.js",
+    "db:make:seed": "knex seed:make --knexfile knexfile.js",
+    "db:status": "knex migrate:status --knexfile knexfile.js",
+    "db:reset": "npm run db:rollback:all && npm run db:migrate && npm run db:seed",
+    "db:fresh": "npm run db:rollback:all && npm run db:migrate",
+    "setup": "npm install && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "axios": "^1.6.2",
@@ -39,6 +49,6 @@
     "supertest": "^7.1.1"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   }
 }
