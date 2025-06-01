@@ -81,6 +81,7 @@ app.use('/api/v1/admin', adminRoutes);
 // Serve Vue.js static files (protected)
 const authMiddleware = require('./middleware/auth');
 app.use('/public', authMiddleware(['GCS', 'Logistics', 'Admin']), express.static(path.join(__dirname, 'public')));
+app.use('/resources', express.static(path.join(__dirname, 'resources')));
 
 // Default route for SPA
 app.get('/', authMiddleware(['GCS', 'Logistics', 'Admin']), (req, res) => {
@@ -119,31 +120,7 @@ app.get('/login', (req, res) => {
             <div id="error" class="error"></div>
         </form>
         
-        <script>
-            document.getElementById('loginForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                
-                try {
-                    const response = await fetch('/api/v1/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password }),
-                        credentials: 'include'
-                    });
-                    
-                    if (response.ok) {
-                        window.location.href = '/public';
-                    } else {
-                        const error = await response.json();
-                        document.getElementById('error').textContent = error.message;
-                    }
-                } catch (err) {
-                    document.getElementById('error').textContent = 'Login failed. Please try again.';
-                }
-            });
-        </script>
+        <script src="/resources/script.js"></script>
     </body>
     </html>
   `);
@@ -153,9 +130,9 @@ app.get('/login', (req, res) => {
 app.use(errorHandler);
 
 // 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({ message: 'Route not found' });
-});
+// app.use('*', (req, res) => {
+//   res.status(404).json({ message: 'Route not found' });
+// });
 
 const PORT = config.PORT || 3000;
 
