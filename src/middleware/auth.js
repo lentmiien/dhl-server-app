@@ -9,7 +9,8 @@ const auth = (allowedRoles = []) => {
       const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
       
       if (!token) {
-        return res.status(401).json({ message: 'Access denied. No token provided.' });
+        return res.redirect('/login');
+        // return res.status(401).json({ message: 'Access denied. No token provided.' });
       }
       
       const decoded = jwt.verify(token, config.JWT_SECRET);

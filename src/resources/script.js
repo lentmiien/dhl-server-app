@@ -12,7 +12,7 @@ async function SubmitForm(e) {
     });
     
     if (response.ok) {
-      window.location.href = '/public';
+      window.location.href = '/';
     } else {
       const error = await response.json();
       document.getElementById('error').textContent = error.message;

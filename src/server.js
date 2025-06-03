@@ -78,13 +78,13 @@ app.use('/api/v1/uploads', uploadRoutes);
 app.use('/api/v1/shipments', shipmentRoutes);
 app.use('/api/v1/admin', adminRoutes);
 
-// Serve Vue.js static files (protected)
-const authMiddleware = require('./middleware/auth');
-app.use('/public', authMiddleware(['GCS', 'Logistics', 'Admin']), express.static(path.join(__dirname, 'public')));
+// Serve static files
 app.use('/resources', express.static(path.join(__dirname, 'resources')));
 
 // Default route for SPA
+const authMiddleware = require('./middleware/auth');
 app.get('/', authMiddleware(['GCS', 'Logistics', 'Admin']), (req, res) => {
+  // res.redirect('/login');
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
@@ -125,6 +125,9 @@ app.get('/login', (req, res) => {
     </html>
   `);
 });
+
+// Serve Vue.js static files (protected)
+app.use('/', authMiddleware(['GCS', 'Logistics', 'Admin']), express.static(path.join(__dirname, 'public')));
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
